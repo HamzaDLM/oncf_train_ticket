@@ -1,1 +1,1 @@
-worker: python trainticker.py
+worker: python trainticket.py
