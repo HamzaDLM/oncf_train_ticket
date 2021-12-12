@@ -5,11 +5,11 @@ from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.common.exceptions import NoSuchElementException
 import time
-from win10toast import ToastNotifier
+# from win10toast import ToastNotifier
 import schedule
 
 #Initiate notifier
-toaster = ToastNotifier()
+# toaster = ToastNotifier()
 print('*** OPENING FIREFOX BROWSER ', flush=True)
 
 #Initiate variables
@@ -114,12 +114,12 @@ def reserve_ticket(date=go_date):
                 print("error found")
             #end operations
             # time.sleep(15)
-            toaster.show_toast("Train Ticket Script","Train ticket reservation has completed, check email in your phone.", duration=10)
+            # toaster.show_toast("Train Ticket Script","Train ticket reservation has completed, check email in your phone.", duration=10)
             # driver.quit()
             Status = True
         elif increment == 4:
             increment +=1
-            toaster.show_toast("Train Ticket Script","[N] Date check is unsuccessfull, operation halted !", duration=10)
+            # toaster.show_toast("Train Ticket Script","[N] Date check is unsuccessfull, operation halted !", duration=10)
         else:
             increment += 1
 
