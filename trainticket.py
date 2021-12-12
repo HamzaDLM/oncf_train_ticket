@@ -17,6 +17,7 @@ go_date = '08:35'
 back_date = '17:54'
 card_id = '610179321001547'
 sleep_duration = 5
+schedule_timer = "04:00"
 
 
 def reserve_ticket(date=go_date):
@@ -35,7 +36,7 @@ def reserve_ticket(date=go_date):
         WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,"/html/body/div[1]/section/div[1]/div[2]/main/div[1]/div/div/div/div/div[1]/div/div[2]/div[3]/div/div/div[1]/div[1]/div[1]/div/div/div[2]/div/div/div"))).click()
         # click right card type
         time.sleep(sleep_duration)
-        WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,"/html/body/div[2]/div/div/div/ul/li[8]"))).click()
+        WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,"/html/body/div[2]/div/div/div/ul/li[9]"))).click()
         # enter card code 
         time.sleep(sleep_duration)
         WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="searchDataCode-0"]'))).send_keys(card_id)
@@ -75,6 +76,7 @@ def reserve_ticket(date=go_date):
         WebDriverWait(driver, 40).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="root"]/section/div[1]/div[2]/main/div/div/div/div[1]/div/div[2]/div/button')))
     except:
         print("PAGE STILL NOT LOADED")
+    time.sleep(sleep_duration)
 
     while Status == False & increment < 5:
         time.sleep(5)
@@ -124,11 +126,11 @@ def reserve_ticket(date=go_date):
             increment += 1
 
 
-schedule.every().day.at('04:00').do(reserve_ticket)
+schedule.every().day.at(schedule_timer).do(reserve_ticket)
 
-
-
-
+while True:
+    schedule.run_pending()
+    time.sleep(1)
 
 
 
