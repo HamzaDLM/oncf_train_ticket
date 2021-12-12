@@ -21,22 +21,15 @@ sleep_duration = 5
 schedule_timer = "04:00" #heroku uses UTC, UTC = GMT, but Morocco has GMT+1 so UTC is morrocan time -1h
 
 
-#testing chrome 
-gChromeOptions = webdriver.ChromeOptions()
-gChromeOptions.add_argument("window-size=1920x1480")
-gChromeOptions.add_argument("disable-dev-shm-usage")
-driver = webdriver.Chrome(
-    chrome_options=gChromeOptions, executable_path=ChromeDriverManager().install()
-)
-driver.get("https://www.python.org/")
-time.sleep(3)
-print(driver.page_source)
-driver.close()
-
-
 def reserve_ticket(date=go_date):
     ################### STEP 0
-
+    # Chrome webdriver for heroku:
+    gChromeOptions = webdriver.ChromeOptions()
+    gChromeOptions.add_argument("window-size=1920x1480")
+    gChromeOptions.add_argument("disable-dev-shm-usage")
+    driver = webdriver.Chrome(
+    chrome_options=gChromeOptions, executable_path=ChromeDriverManager().install())
+    # Chrome webdriver for local
     # driver = webdriver.Chrome(ChromeDriverManager().install())
     link = "https://www.oncf-voyages.ma/"
     driver.get(link)
