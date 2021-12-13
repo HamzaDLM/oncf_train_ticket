@@ -6,24 +6,33 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.chrome.service import Service
 import time
-# from win10toast import ToastNotifier
+from win10toast import ToastNotifier
 import schedule
+from pyvirtualdisplay import Display ####
 
 #Initiate notifier
-# toaster = ToastNotifier()
-print('*** OPENING FIREFOX BROWSER ', flush=True)
+toaster = ToastNotifier()
+
 
 #Initiate variables
 go_date = '08:35'
 back_date = '17:54'
 card_id = '610179321001547'
 sleep_duration = 2
-schedule_timer = "04:00" #heroku uses UTC, UTC = GMT, but Morocco has GMT+1 so UTC is morrocan time -1h
+schedule_timer = "02:00" #heroku uses UTC, UTC = GMT, but Morocco has GMT+1 so UTC is morrocan time -1h
 
 
 def reserve_ticket(date=go_date):
     ################### STEP 0
     # Chrome webdriver for heroku:
+    toaster.show_toast("Train Ticket Script","Script will run.", duration=10)
+    print('*** OPENING DRIVER', flush=True)
+
+    ###
+    display = Display(visible=False, size=(800, 600))
+    display.start()
+    time.sleep(sleep_duration)
+
     gChromeOptions = webdriver.ChromeOptions()
     gChromeOptions.add_argument("window-size=1920x1480")
     # gChromeOptions.add_argument("--headless")
@@ -39,6 +48,7 @@ def reserve_ticket(date=go_date):
     print(driver.page_source)
     time.sleep(sleep_duration)
 
+    #test if elements are found
     a = driver.find_elements_by_xpath('//*[@id="root"]/section/div[1]/div[2]/main/div[1]/div/div/div/div/div[1]/div/div[1]/div[3]')
     print("-----------------------", flush=True)
     print(a, flush=True)
@@ -143,95 +153,18 @@ def reserve_ticket(date=go_date):
                 print("error found", flush=True)
             #end operations
             # time.sleep(15)
-            # toaster.show_toast("Train Ticket Script","Train ticket reservation has completed, check email in your phone.", duration=10)
+            toaster.show_toast("Train Ticket Script","Train ticket reservation has completed, check email in your phone.", duration=10)
             # driver.quit()
             Status = True
         else:
             increment += 1
 
 
-# schedule.every().day.at(schedule_timer).do(reserve_ticket)
+schedule.every().day.at(schedule_timer).do(reserve_ticket)
 
-# while True:
-#     schedule.run_pending()
-#     time.sleep(1)
-
-
-reserve_ticket()
+while True:
+    schedule.run_pending()
+    time.sleep(1)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        # #aller
-        # time.sleep(5)
-        # WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH,'/html/body/div[1]/section/div[1]/div[2]/main/div/div/div/div[1]/div/div[5]/div[2]/div[' + int(increment) + ']/div[1]/div[2]/div/button'))).click()
-        # time.sleep(sleep_duration)
-        # WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH,'/html/body/div[1]/section/div[1]/div[2]/main/div/div/div/div[1]/div/div[5]/div[2]/div[' + int(increment) + ']/div[2]/div/div/div[2]/div/div/div[1]/div/div/button'))).click()
-        # time.sleep(sleep_duration)
-        # WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH,'/html/body/div[1]/section/div[1]/div[2]/main/div/div/div/div[1]/div/div[5]/div[2]/div[' + int(increment) + ']/div[2]/div/div/div[2]/div/div[2]/div/div[2]/button'))).click()
-        # #retour (disabled ftm)
-        # # time.sleep(3)
-        # # WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH,'/html/body/div[1]/section/div[1]/div[2]/main/div/div/div/div[1]/div/div[6]/div[2]/div[5]/div[1]/div[2]/div/button'))).click()
-        # # time.sleep(sleep_duration)
-        # # WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH,'/html/body/div[1]/section/div[1]/div[2]/main/div/div/div/div[1]/div/div[6]/div[2]/div[5]/div[2]/div/div/div[2]/div/div/div[1]/div/div/button'))).click()
-        # # time.sleep(sleep_duration)
-        # # WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH,'/html/body/div[1]/section/div[1]/div[2]/main/div/div/div/div[1]/div/div[6]/div[2]/div[5]/div[2]/div/div/div[2]/div/div[2]/div/div[2]/button'))).click()
-        # #continuer
-        # WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH,'/html/body/div[1]/section/div[1]/div[2]/main/div/div/div/div[2]/div/footer/a/button'))).click()
-
-        
-        # #check if the times are correct
-        # import datetime
-        # import re
-        # from bs4 import BeautifulSoup
-
-        # time.sleep(3)
-        # html = driver.page_source
-        # soup = BeautifulSoup(html, 'html.parser')
-
-        # if result[0] == go_date:
-        #     print('[Y] Date check successful !')
-        #     toaster.show_toast("Train Ticket Script","[Y] Date check successful !", duration=10)
-        #     #fill info
-        #     WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH,'/html/body/div[1]/section/div[1]/div[2]/main/div/div/div/div[1]/div/div[2]/div/div/div[2]/div[2]/div/div[2]/div/input'))).send_keys('Hamza')
-        #     time.sleep(sleep_duration)
-        #     WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH,'/html/body/div[1]/section/div[1]/div[2]/main/div/div/div/div[1]/div/div[2]/div/div/div[2]/div[2]/div/div[3]/div/input'))).send_keys('Dellam')
-        #     time.sleep(sleep_duration)
-        #     WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH,'/html/body/div[1]/section/div[1]/div[2]/main/div/div/div/div[1]/div/div[2]/div/div/div[2]/div[2]/div/div[4]/div/input'))).send_keys('hamzadellam@hotmail.com')
-        #     time.sleep(sleep_duration)
-        #     WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH,'/html/body/div[1]/section/div[1]/div[2]/main/div/div/div/div[1]/div/div[2]/div/div/div[2]/div[2]/div/div[5]/div/input'))).send_keys('hamzadellam@hotmail.com')
-        #     time.sleep(sleep_duration)
-        #     # WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH,'/html/body/div[1]/section/div[1]/div[2]/main/div/div/div/div[1]/div/div[2]/div/div/div[2]/div[2]/div/div[10]/label/span[1]/input'))).click()
-        #     element = driver.find_element(By.XPATH, "/html/body/div[1]/section/div[1]/div[2]/main/div/div/div/div[1]/div/div[2]/div/div/div[2]/div[2]/div/div[10]/label/span[1]/input")
-        #     driver.execute_script("arguments[0].click();", element)
-        #     time.sleep(sleep_duration)
-        #     WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH,'/html/body/div[1]/section/div[1]/div[2]/main/div/div/div/div[1]/div/div[2]/div/div/div[3]/button'))).click()
-        #     #end operations
-        #     time.sleep(15)
-        #     if result[1] == back_date:
-        #         toaster.show_toast("Train Ticket Script","Train ticket reservation has completed, check email in your phone.", duration=10)
-        #     if result[1] != back_date:    
-        #         toaster.show_toast("Train Ticket Script","Train ticket reservation has completed, evening ticket doesn't match recommended time. Check email in your phone.", duration=10)
-        #     driver.quit()
-        #     Status = True
-        # else: 
-        #     print('[N] Date check is unsuccessfull, operation halted !')
-        #     toaster.show_toast("Train Ticket Script","[N] Date check is unsuccessfull, operation halted !", duration=10)
-        #     time.sleep(15)
-
+# reserve_ticket()

@@ -1,1 +1,1 @@
-web: python trainticket.py
+worker: python trainticket.py
