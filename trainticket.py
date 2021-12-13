@@ -26,9 +26,14 @@ def reserve_ticket(date=go_date):
     ################### STEP 0
     # Chrome webdriver for heroku:
     gChromeOptions = webdriver.ChromeOptions()
+    gChromeOptions.binary_location = os.environ.get("GOOGLE_CHROME_BIN") #aa
     gChromeOptions.add_argument("window-size=1920x1480")
-    gChromeOptions.add_argument("disable-dev-shm-usage")
-    driver = webdriver.Chrome(chrome_options=gChromeOptions, executable_path=ChromeDriverManager().install())
+    gChromeOptions.add_argument("--headless")
+    gChromeOptions.add_argument("--disable-dev-shm-usage")
+    gChromeOptions.add_argument("--no-sandbox")
+    gChromeOptions.add_argument("--disable-gpu")
+    # driver = webdriver.Chrome(chrome_options=gChromeOptions, executable_path=ChromeDriverManager().install())
+    driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=gChromeOptions)
     # Chrome webdriver for local
     # driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     link = "https://www.oncf-voyages.ma/"
