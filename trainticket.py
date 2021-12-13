@@ -28,7 +28,7 @@ def reserve_ticket(date=go_date):
     gChromeOptions = webdriver.ChromeOptions()
     gChromeOptions.add_argument("window-size=1920x1480")
     gChromeOptions.add_argument("disable-dev-shm-usage")
-    driver = webdriver.Chrome(chrome_options=gChromeOptions, service=Service(ChromeDriverManager().install()))
+    driver = webdriver.Chrome(chrome_options=gChromeOptions, executable_path=ChromeDriverManager().install())
     # Chrome webdriver for local
     # driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     link = "https://www.oncf-voyages.ma/"
