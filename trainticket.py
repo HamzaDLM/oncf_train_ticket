@@ -34,7 +34,8 @@ def reserve_ticket(date=go_date):
     link = "https://www.oncf-voyages.ma/"
     driver.get(link)
     time.sleep(sleep_duration)
-
+    print(driver.page_source)
+    time.sleep(sleep_duration)
     ################### STEP 1 
     # click reserve tab
     try:
