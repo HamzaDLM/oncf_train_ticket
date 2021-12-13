@@ -42,11 +42,11 @@ def reserve_ticket(date=go_date):
     # click reserve tab
     try:
         a = driver.find_element_by_xpath('//*[@id="root"]/section/div[1]/div[2]/main/div[1]/div/div/div/div/div[1]/div/div[1]/div[3]')
-        print(a)
+        print("-----------------------", flush=True)
+        print(a, flush=True)
         b = driver.find_element_by_css_selector("#root > section > div.ant-row > div.ant-col > main > div.b_homeBanner > div > div > div > div > div.SearchWidget_form.home > div > div.sc-bwzfXH.cbJdAM > div:nth-child(3)")
-        print(b)
-        time.sleep(sleep_duration)
-        print(driver.page_source)
+        print("-----------------------", flush=True)
+        print(b, flush=True)
         WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div/section/div[1]/div[2]/main/div[1]/div/div/div/div/div[1]/div/div[1]/div[3]'))).click()
         # enter card type
         time.sleep(sleep_duration)
@@ -84,7 +84,10 @@ def reserve_ticket(date=go_date):
         WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH,'/html/body/div[1]/section/div[1]/div[2]/main/div[1]/div/div/div/div/div[1]/div/div[2]/div[3]/div/div/div[2]/div/div/button'))).click()
     except NoSuchElementException:
         pass
-    
+
+    print("---------------------------------------", flush=True)
+    time.sleep(sleep_duration)
+    print(driver.page_source, flush=True)
     ################### STEP 2
     Status = False
     increment = 1
@@ -95,7 +98,7 @@ def reserve_ticket(date=go_date):
         print("PAGE STILL NOT LOADED", flush=True)
     time.sleep(sleep_duration)
 
-    while Status == False & increment < 5:
+    while Status == False & int(increment) < 5:
         time.sleep(5)
         # Check date label associated to Div
         found_time = ''
@@ -138,9 +141,6 @@ def reserve_ticket(date=go_date):
             # toaster.show_toast("Train Ticket Script","Train ticket reservation has completed, check email in your phone.", duration=10)
             # driver.quit()
             Status = True
-        elif increment == 4:
-            increment +=1
-            # toaster.show_toast("Train Ticket Script","[N] Date check is unsuccessfull, operation halted !", duration=10)
         else:
             increment += 1
 
