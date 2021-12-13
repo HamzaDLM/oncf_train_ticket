@@ -6,12 +6,12 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.chrome.service import Service
 import time
-from win10toast import ToastNotifier
+# from win10toast import ToastNotifier
 import schedule
 from pyvirtualdisplay import Display ####
 
 #Initiate notifier
-toaster = ToastNotifier()
+# toaster = ToastNotifier()
 
 
 #Initiate variables
@@ -25,7 +25,7 @@ schedule_timer = "02:00" #heroku uses UTC, UTC = GMT, but Morocco has GMT+1 so U
 def reserve_ticket(date=go_date):
     ################### STEP 0
     # Chrome webdriver for heroku:
-    toaster.show_toast("Train Ticket Script","Script will run.", duration=10)
+    # toaster.show_toast("Train Ticket Script","Script will run.", duration=10)
     print('*** OPENING DRIVER', flush=True)
 
     ###
@@ -153,7 +153,7 @@ def reserve_ticket(date=go_date):
                 print("error found", flush=True)
             #end operations
             # time.sleep(15)
-            toaster.show_toast("Train Ticket Script","Train ticket reservation has completed, check email in your phone.", duration=10)
+            # toaster.show_toast("Train Ticket Script","Train ticket reservation has completed, check email in your phone.", duration=10)
             # driver.quit()
             Status = True
         else:
