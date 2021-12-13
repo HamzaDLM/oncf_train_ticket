@@ -4,6 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.chrome.service import Service
 import time
 # from win10toast import ToastNotifier
 import schedule
@@ -17,7 +18,7 @@ print('*** OPENING FIREFOX BROWSER ', flush=True)
 go_date = '08:35'
 back_date = '17:54'
 card_id = '610179321001547'
-sleep_duration = 5
+sleep_duration = 2
 schedule_timer = "04:00" #heroku uses UTC, UTC = GMT, but Morocco has GMT+1 so UTC is morrocan time -1h
 
 
@@ -27,10 +28,9 @@ def reserve_ticket(date=go_date):
     gChromeOptions = webdriver.ChromeOptions()
     gChromeOptions.add_argument("window-size=1920x1480")
     gChromeOptions.add_argument("disable-dev-shm-usage")
-    driver = webdriver.Chrome(
-    chrome_options=gChromeOptions, executable_path=ChromeDriverManager().install())
+    driver = webdriver.Chrome(chrome_options=gChromeOptions, service=Service(ChromeDriverManager().install()))
     # Chrome webdriver for local
-    # driver = webdriver.Chrome(ChromeDriverManager().install())
+    # driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     link = "https://www.oncf-voyages.ma/"
     driver.get(link)
     time.sleep(sleep_duration)
@@ -83,19 +83,19 @@ def reserve_ticket(date=go_date):
     try:
         WebDriverWait(driver, 40).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="root"]/section/div[1]/div[2]/main/div/div/div/div[1]/div/div[2]/div/button')))
     except:
-        print("PAGE STILL NOT LOADED")
+        print("PAGE STILL NOT LOADED", flush=True)
     time.sleep(sleep_duration)
 
     while Status == False & increment < 5:
         time.sleep(5)
         # Check date label associated to Div
         found_time = ''
-        print("--------- increment: " + str(increment))
+        print("--------- increment: " + str(increment), flush=True)
         try:
             found_time = driver.find_element(By.XPATH, '//*[@id="root"]/section/div[1]/div[2]/main/div/div/div/div[1]/div/div[5]/div[2]/div[' + str(increment) + ']/div[1]/div[1]/div/div[3]/div[1]/div/label[2]').text
-            print(found_time)
+            print(found_time, flush=True)
         except NoSuchElementException:
-            print("error found")
+            print("error found", flush=True)
         if found_time == go_date:
             try:
                 # Click on "Réserver"
@@ -120,8 +120,10 @@ def reserve_ticket(date=go_date):
                 driver.execute_script("arguments[0].click();", element)
                 time.sleep(sleep_duration)
                 WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH,'/html/body/div[1]/section/div[1]/div[2]/main/div/div/div/div[1]/div/div[2]/div/div/div[3]/button'))).click()
+                time.sleep(30)
+                print("Train ticket reservation has completed, check email in your phone.", flush=True)
             except NoSuchElementException:
-                print("error found")
+                print("error found", flush=True)
             #end operations
             # time.sleep(15)
             # toaster.show_toast("Train Ticket Script","Train ticket reservation has completed, check email in your phone.", duration=10)
@@ -141,7 +143,7 @@ while True:
     time.sleep(1)
 
 
-
+# reserve_ticket()
 
 
 
