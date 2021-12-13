@@ -41,9 +41,10 @@ def reserve_ticket(date=go_date):
     ################### STEP 1 
     # click reserve tab
     try:
-        a = driver.find_elements_by_xpath('/html/body/div/section/div[1]/div[2]/main/div[1]/div/div/div/div/div[1]/div/div[1]/div[3]')
+        a = driver.find_element_by_xpath('//*[@id="root"]/section/div[1]/div[2]/main/div[1]/div/div/div/div/div[1]/div/div[1]/div[3]')
         print(a)
-        a[0].click()
+        b = driver.find_element_by_css_selector("#root > section > div.ant-row > div.ant-col > main > div.b_homeBanner > div > div > div > div > div.SearchWidget_form.home > div > div.sc-bwzfXH.cbJdAM > div:nth-child(3)")
+        print(b)
         time.sleep(sleep_duration)
         print(driver.page_source)
         WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div/section/div[1]/div[2]/main/div[1]/div/div/div/div/div[1]/div/div[1]/div[3]'))).click()
