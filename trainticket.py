@@ -160,11 +160,11 @@ def reserve_ticket(date=go_date):
             increment += 1
 
 
-schedule.every().day.at(schedule_timer).do(reserve_ticket)
+# schedule.every().day.at(schedule_timer).do(reserve_ticket)
 
-while True:
-    schedule.run_pending()
-    time.sleep(1)
+# while True:
+#     schedule.run_pending()
+#     time.sleep(1)
 
 
-# reserve_ticket()
+reserve_ticket()
