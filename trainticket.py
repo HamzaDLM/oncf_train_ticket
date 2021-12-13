@@ -8,7 +8,6 @@ from selenium.webdriver.chrome.service import Service
 import time
 # from win10toast import ToastNotifier
 import schedule
-import os
 
 #Initiate notifier
 # toaster = ToastNotifier()
@@ -26,14 +25,12 @@ def reserve_ticket(date=go_date):
     ################### STEP 0
     # Chrome webdriver for heroku:
     gChromeOptions = webdriver.ChromeOptions()
-    gChromeOptions.binary_location = os.environ.get("GOOGLE_CHROME_BIN") #aa
     gChromeOptions.add_argument("window-size=1920x1480")
     gChromeOptions.add_argument("--headless")
     gChromeOptions.add_argument("--disable-dev-shm-usage")
     gChromeOptions.add_argument("--no-sandbox")
     gChromeOptions.add_argument("--disable-gpu")
-    # driver = webdriver.Chrome(chrome_options=gChromeOptions, executable_path=ChromeDriverManager().install())
-    driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=gChromeOptions)
+    driver = webdriver.Chrome(chrome_options=gChromeOptions, executable_path=ChromeDriverManager().install())
     # Chrome webdriver for local
     # driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     link = "https://www.oncf-voyages.ma/"
@@ -44,7 +41,7 @@ def reserve_ticket(date=go_date):
     ################### STEP 1 
     # click reserve tab
     try:
-        WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div/section/div[1]/div[2]/main/div[1]/div/div/div/div/div[1]/div/div[1]/div[3]'))).click()
+        WebDriverWait(driver, 30).until(EC.element_to_be_clickable(By.XPATH, '/html/body/div/section/div[1]/div[2]/main/div[1]/div/div/div/div/div[1]/div/div[1]/div[3]')).click()
         # enter card type
         time.sleep(sleep_duration)
         WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,"/html/body/div[1]/section/div[1]/div[2]/main/div[1]/div/div/div/div/div[1]/div/div[2]/div[3]/div/div/div[1]/div[1]/div[1]/div/div/div[2]/div/div/div"))).click()
