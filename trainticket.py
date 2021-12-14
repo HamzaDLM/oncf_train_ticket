@@ -6,12 +6,11 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.chrome.service import Service
 import time
-# from win10toast import ToastNotifier
+from win10toast import ToastNotifier
 import schedule
-from pyvirtualdisplay import Display ####
 
 #Initiate notifier
-# toaster = ToastNotifier()
+toaster = ToastNotifier()
 
 
 #Initiate variables
@@ -25,14 +24,8 @@ schedule_timer = "02:00" #heroku uses UTC, UTC = GMT, but Morocco has GMT+1 so U
 def reserve_ticket(date=go_date):
     ################### STEP 0
     # Chrome webdriver for heroku:
-    # toaster.show_toast("Train Ticket Script","Script will run.", duration=10)
+    toaster.show_toast("Train Ticket Script","Script will run.", duration=10)
     print('*** OPENING DRIVER', flush=True)
-
-    ###
-    display = Display(visible=False, size=(800, 600))
-    display.start()
-    time.sleep(sleep_duration)
-
     gChromeOptions = webdriver.ChromeOptions()
     gChromeOptions.add_argument("window-size=1920x1480")
     # gChromeOptions.add_argument("--headless")
@@ -153,18 +146,18 @@ def reserve_ticket(date=go_date):
                 print("error found", flush=True)
             #end operations
             # time.sleep(15)
-            # toaster.show_toast("Train Ticket Script","Train ticket reservation has completed, check email in your phone.", duration=10)
+            toaster.show_toast("Train Ticket Script","Train ticket reservation has completed, check email in your phone.", duration=10)
             # driver.quit()
             Status = True
         else:
             increment += 1
 
 
-# schedule.every().day.at(schedule_timer).do(reserve_ticket)
+schedule.every().day.at(schedule_timer).do(reserve_ticket)
 
-# while True:
-#     schedule.run_pending()
-#     time.sleep(1)
+while True:
+    schedule.run_pending()
+    time.sleep(1)
 
 
-reserve_ticket()
+# reserve_ticket()
