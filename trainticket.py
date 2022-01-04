@@ -145,12 +145,13 @@ def reserve_ticket(date=go_date):
             except NoSuchElementException:
                 print("error found", flush=True)
             #end operations
-            # time.sleep(15)
+            time.sleep(15)
             toaster.show_toast("Train Ticket Script","Train ticket reservation has completed, check email in your phone.", duration=10)
-            # driver.quit()
+
             Status = True
         else:
             increment += 1
+    driver.quit()
 
 
 schedule.every().day.at(schedule_timer).do(reserve_ticket)
